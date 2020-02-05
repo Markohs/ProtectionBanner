@@ -1,16 +1,16 @@
 {
     "name": "markohs/protectionbanner",
     "description": ":package_description",
-    "license": "license",
+    "license": "MIT",
     "authors": [
         {
-            "name": "author name",
-            "email": "author email",
-            "homepage": "author homepage"
+            "name": "Markohs",
+            "email": "marcos@tyrellcorporation.es",
+            "homepage": "https://github.com/Markohs"
         }
     ],
     "homepage": "https://github.com/markohs/protectionbanner",
-    "keywords": ["Laravel", "ProtectionBanner"],
+    "keywords": ["Laravel", "ProtectionBanner","cookies","middleware","adult"],
     "require": {
         "jaybizzle/laravel-crawler-detect": "1.*",
         "illuminate/support": "~5|~6"
