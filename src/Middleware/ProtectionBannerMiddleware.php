@@ -2,23 +2,22 @@
 
 namespace Markohs\ProtectionBanner\Middleware;
 
-
 use Closure;
 use Cookie;
 use Crawler;
+use Illuminate\Http\Request;
 use Log;
-use Session;
-use Response;
 use Redirect;
+use Response;
 //use GeoIP;
 
-use Illuminate\Http\Request;
+use Session;
 
 class ProtectionBannerMiddleware
 {
     private function isReddit(Request $request)
     {
-        return (strpos($request->header('User-Agent'), 'redditbot') !== false);
+        return strpos($request->header('User-Agent'), 'redditbot') !== false;
     }
 
     /**
@@ -30,24 +29,22 @@ class ProtectionBannerMiddleware
      */
     public function handle($request, Closure $next)
     {
+        $ses_name = config('protectionbanner.ses_name');
 
-        $ses_name = config("protectionbanner.ses_name");
-
-        if($ses_name == null || config("protectionbanner.disabled")){
+        if ($ses_name == null || config('protectionbanner.disabled')) {
             // probably a config:cache production error, disable this middleware
             return $next($request);
         }
 
-        if ( $request->cookie($ses_name) || Crawler::isCrawler() || $this->IPExcluded($request) || $this->isWhitelisted($request) || $this->isReddit($request) ){
+        if ($request->cookie($ses_name) || Crawler::isCrawler() || $this->IPExcluded($request) || $this->isWhitelisted($request) || $this->isReddit($request)) {
             // Already confirmed
             return $next($request);
-        }
-        else if ($request->input($ses_name) == "yes"){
-            // User is confirming the conditions, 
+        } elseif ($request->input($ses_name) == 'yes') {
+            // User is confirming the conditions,
 
             // If this user comes from a referal, save it on the session
-            if($request->input('id')){
-                Session::put('saved_adult_affiliate_id',$request->input('id'));
+            if ($request->input('id')) {
+                Session::put('saved_adult_affiliate_id', $request->input('id'));
             }
 
             // Log the IP, and explicit accept of conditions
@@ -55,55 +52,52 @@ class ProtectionBannerMiddleware
 
             $newurl = $request->url();
 
-            if ($request->input('utm_source') || $request->input('utm_medium') || $request->input('utm_campaign' || $request->input('utm_medium'))){
+            if ($request->input('utm_source') || $request->input('utm_medium') || $request->input('utm_campaign' || $request->input('utm_medium'))) {
+                $newurl .= '';
 
-                $newurl.="";
+                $extra_items = [];
 
-                $extra_items=[];
-
-                if ($request->input('utm_source')){
-                    array_push($extra_items,"utm_source=".$request->input('utm_source'));
+                if ($request->input('utm_source')) {
+                    array_push($extra_items, 'utm_source='.$request->input('utm_source'));
                 }
 
-                if ($request->input('utm_medium')){
-                    array_push($extra_items,"utm_medium=".$request->input('utm_medium'));
+                if ($request->input('utm_medium')) {
+                    array_push($extra_items, 'utm_medium='.$request->input('utm_medium'));
                 }
 
-                if ($request->input('utm_campaign')){
-                    array_push($extra_items,"utm_campaign=".$request->input('utm_campaign'));
+                if ($request->input('utm_campaign')) {
+                    array_push($extra_items, 'utm_campaign='.$request->input('utm_campaign'));
                 }
 
-                if ($request->input('s')){
-                    array_push($extra_items,"s=".$request->input('s'));
+                if ($request->input('s')) {
+                    array_push($extra_items, 's='.$request->input('s'));
                 }
 
-                $newurl.='?'.implode($extra_items,'&');
-
+                $newurl .= '?'.implode($extra_items, '&');
             }
 
             $redirect = Redirect::away($newurl);
-            $redirect->withCookie(cookie($ses_name, 'yes',259200));
-            $redirect->header('Location',$newurl);
+            $redirect->withCookie(cookie($ses_name, 'yes', 259200));
+            $redirect->header('Location', $newurl);
 
             $redirect->setTargetUrl($newurl);
 
-            return($redirect);
+            return $redirect;
         }
         // Show the disclaimer
 
-        return response()->view('protectionbanner::banner',compact('request'),406);
+        return response()->view('protectionbanner::banner', compact('request'), 406);
     }
 
     private function logAccept($request)
     {
-
         $logchannel = config('protectionbanner.logchannel');
 
         if ($logchannel == null) {
             return false;
         }
 
-        $message = 'Info: Client:' . $request->getClientIp() .' clicked YES';
+        $message = 'Info: Client:'.$request->getClientIp().' clicked YES';
         Log::channel($logchannel)->info($message);
     }
 
@@ -127,7 +121,8 @@ class ProtectionBannerMiddleware
     private function getContinent(Request $request)
     {
         $ip = $request->getClientIp();
-        return "DISABLED";
+
+        return 'DISABLED';
 //        return GeoIP::getLocation($request->getClientIp())['continent'];
     }
 }

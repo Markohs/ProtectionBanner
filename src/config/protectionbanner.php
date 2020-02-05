@@ -1,40 +1,39 @@
 <?php
 
 return [
-	/*
-	 * Array of environments were this middleware is *ENABLED*
-	 * Default: ['stage', 'prod']
-	 */
+    /*
+     * Array of environments were this middleware is *ENABLED*
+     * Default: ['stage', 'prod']
+     */
 
-	'envs_enabled' => ['stage', 'prod'],
+    'envs_enabled' => ['stage', 'prod'],
 
-	/*
-	 * Set up a array of simple text patterns wich will be EXCLUDED from URL redirection, matched in  * regexp fashion
-	 * example: ['api/example','cookie-notice']
-	 * Default: none
-	 */
+    /*
+     * Set up a array of simple text patterns wich will be EXCLUDED from URL redirection, matched in  * regexp fashion
+     * example: ['api/example','cookie-notice']
+     * Default: none
+     */
 
-	'whitelist_url' => [],
+    'whitelist_url' => [],
 
-	/*
-	 * Autoregister in these middleware groups
-	 * Default: ['web']
-	 */
+    /*
+     * Autoregister in these middleware groups
+     * Default: ['web']
+     */
 
-	'autoregister' => ['web'],
+    'autoregister' => ['web'],
 
-	/*
-	 * Channel to log accept info, if necessary
-	 * Default: null
-	 * example: "accepts"
-	 */
-	'logchannel' => null,
+    /*
+     * Channel to log accept info, if necessary
+     * Default: null
+     * example: "accepts"
+     */
+    'logchannel' => null,
 
-	/*
-	 * Name of the cookie and get parameter where we store acceptance of conditions
-	 * Default: 'accepted_terms'
-	 */
-	'ses_name' => 'accepted_terms',
-
+    /*
+     * Name of the cookie and get parameter where we store acceptance of conditions
+     * Default: 'accepted_terms'
+     */
+    'ses_name' => 'accepted_terms',
 
 ];

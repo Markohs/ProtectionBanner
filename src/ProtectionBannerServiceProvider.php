@@ -4,8 +4,6 @@ namespace Markohs\ProtectionBanner;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-
-use Markohs\ProtectionBanner\ProtectionBanner;
 use Markohs\ProtectionBanner\Middleware\ProtectionBannerMiddleware;
 
 class ProtectionBannerServiceProvider extends ServiceProvider
@@ -49,7 +47,6 @@ class ProtectionBannerServiceProvider extends ServiceProvider
         $this->app->singleton('protectionbanner', function ($app) {
             return new ProtectionBanner;
         });
-
     }
 
     /**
@@ -61,7 +58,7 @@ class ProtectionBannerServiceProvider extends ServiceProvider
     {
         return ['protectionbanner'];
     }
-    
+
     /**
      * Console-specific booting.
      *
@@ -69,7 +66,6 @@ class ProtectionBannerServiceProvider extends ServiceProvider
      */
     protected function bootForConsole()
     {
-
         $publishTag = 'ProtectionBanner';
 
         // Publishing the configuration file.
@@ -81,6 +77,5 @@ class ProtectionBannerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/resources/views' => base_path('resources/views/vendor/protectionbanner'),
         ], $publishTag);
-
     }
 }
