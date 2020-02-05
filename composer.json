@@ -1,6 +1,6 @@
 {
     "name": "markohs/protectionbanner",
-    "description": ":package_description",
+    "description": "Customizable Laravel Middleware to comply with EU cookie lawls and protect adult websites from child access forcing the client to accept conditions before any cookie or anything is sent.",
     "license": "MIT",
     "authors": [
         {
