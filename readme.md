@@ -72,6 +72,20 @@ You can set this url whitelist in  `config/protectionbanner.php`:
 
 ```
 
+### Logging
+
+I don't know if it's of any legal value, but it's possible to log the IP of all accepts of confitions, along ofc, with the timestamp `config/protectionbanner.php`:
+```php
+	/*
+	 * Channel to log accept info, if necessary
+	 * Default: null
+	 * example: "accepts"
+	 */
+	'logchannel' => "accepts"
+```
+
+You will of course need to add that channel to `config/logging.php`.
+
 ## Important notes
 
 If you are using Cloudflare or some kind of proxy to serve your website, you need to make sure you configure TrustedProxy correctly *or this Middleware will cause redirect loops*.
