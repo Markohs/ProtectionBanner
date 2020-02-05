@@ -30,11 +30,19 @@ class ProtectionBannerMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ( $request->cookie('confirmed') || Crawler::isCrawler() || $this->IPExcluded($request) || $this->isWhitelisted($request) || $this->isReddit($request) ){
+
+        $ses_name = config("protectionbanner.ses_name");
+
+        if($ses_name == null || config("protectionbanner.disabled")){
+            // probably a config:cache production error, disable this middleware
+            return $next($request);
+        }
+
+        if ( $request->cookie($ses_name) || Crawler::isCrawler() || $this->IPExcluded($request) || $this->isWhitelisted($request) || $this->isReddit($request) ){
             // Already confirmed
             return $next($request);
         }
-        else if ($request->input("confirmed") == "yes"){
+        else if ($request->input($ses_name) == "yes"){
             // User is confirming the conditions, 
 
             // If this user comes from a referal, save it on the session
@@ -74,12 +82,10 @@ class ProtectionBannerMiddleware
             }
 
             $redirect = Redirect::away($newurl);
-            $redirect->withCookie(cookie('confirmed', 'yes',259200));
+            $redirect->withCookie(cookie($ses_name, 'yes',259200));
             $redirect->header('Location',$newurl);
 
             $redirect->setTargetUrl($newurl);
-
-//            dd($redirect);
 
             return($redirect);
         }
@@ -90,8 +96,15 @@ class ProtectionBannerMiddleware
 
     private function logAccept($request)
     {
-            $message = 'Info: Client:' . $request->getClientIp() .' clicked YES';
-            Log::channel("protectionaccepts")->info($message);
+
+        $logchannel = config('protectionbanner.logchannel');
+
+        if ($logchannel == null) {
+            return false;
+        }
+
+        $message = 'Info: Client:' . $request->getClientIp() .' clicked YES';
+        Log::channel($logchannel)->info($message);
     }
 
     private function isWhitelisted($request)

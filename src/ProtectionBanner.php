@@ -9,8 +9,10 @@ class ProtectionBanner
     public static function generate_accept_link(Request $r)
     {
 
+		$ses_name = config("protectionbanner.ses_name");
+
 	    $return_link = $r->url();
-	    $return_link = $return_link . '?confirmed=yes';
+	    $return_link = $return_link . '?'.$ses_name.'=yes';
 
 	    if ($r->input('id')){
 	        $return_link = $return_link . '&id='.$r->input('id');

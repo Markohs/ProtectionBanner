@@ -21,6 +21,20 @@ return [
 	 * Default: ['web']
 	 */
 
-	'autoregister' => ['web']
+	'autoregister' => ['web'],
+
+	/*
+	 * Channel to log accept info, if necessary
+	 * Default: null
+	 * example: "accepts"
+	 */
+	'logchannel' => null,
+
+	/*
+	 * Name of the cookie and get parameter where we store acceptance of conditions
+	 * Default: 'accepted_terms'
+	 */
+	'ses_name' => 'accepted_terms',
+
 
 ];
