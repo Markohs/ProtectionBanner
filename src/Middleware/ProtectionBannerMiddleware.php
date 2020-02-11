@@ -2,18 +2,15 @@
 
 namespace Markohs\ProtectionBanner\Middleware;
 
+use App;
 use Closure;
 use Cookie;
-
 use Crawler;
-
 use Illuminate\Http\Request;
 use Log;
 use Redirect;
-use Response;
 //use GeoIP;
-use App;
-
+use Response;
 use Session;
 
 class ProtectionBannerMiddleware
@@ -34,7 +31,7 @@ class ProtectionBannerMiddleware
     {
         $ses_name = config('protectionbanner.ses_name');
 
-        if ($ses_name == null || !App::environment(config('protectionbanner.enabled_environments'))) {
+        if ($ses_name == null || ! App::environment(config('protectionbanner.enabled_environments'))) {
             // Disabled on this environment, or wrong ses_name, or  config:cache production error. Let's just disable
             return $next($request);
         }

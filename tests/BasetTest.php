@@ -4,7 +4,7 @@ namespace Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
-abstract class BaseTest extends Orchestra
+abstract class BasetTest extends Orchestra
 {
     protected function setUp(): void
     {
@@ -16,14 +16,14 @@ abstract class BaseTest extends Orchestra
     protected function getPackageProviders($app)
     {
         return ['Markohs\ProtectionBanner\ProtectionBannerServiceProvider',
-                'Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider'];
+            'Jaybizzle\LaravelCrawlerDetect\LaravelCrawlerDetectServiceProvider', ];
     }
 
     protected function getPackageAliases($app)
     {
         return [
             'ProtectionBanner' => \Markohs\ProtectionBanner\ProtectionBanner::class,
-            'Crawler' => \Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class
+            'Crawler' => \Jaybizzle\LaravelCrawlerDetect\Facades\LaravelCrawlerDetect::class,
         ];
     }
 

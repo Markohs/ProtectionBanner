@@ -35,8 +35,6 @@ class ProtectionBannerTest extends BaseTest
         $response2 = $this->get('test_forced');
 
         $response2->assertStatus(406);
-
-
     }
 
     /**
