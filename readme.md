@@ -1,8 +1,11 @@
 # ProtectionBanner
 
+[![Build Status](https://travis-ci.org/Markohs/ProtectionBanner.svg?branch=master)](https://travis-ci.org/Markohs/ProtectionBanner)
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![StyleCI][ico-styleci]][link-styleci]
+[![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 Customizable Laravel Middleware to comply with EU cookie lawls and protect adult websites from child access forcing the client to accept conditions before any cookie or anything is sent, detects crawlers so SEO remains unaffected. Take a look at [contributing.md](contributing.md) to see a to do list.
 
@@ -56,7 +59,7 @@ Or you can add the Middleware manually as usual in `app/Http/Kernel.php` in the 
 This package will only be active in the environments you specify, by default `stage`, `prod` and `production`, update `config/protectionbanner.php` if necessary:
 
 ```php
-    'envs_enabled' => ['stage', 'prod', 'production'],
+    'enabled_environments' => ['stage', 'prod', 'production'],
 ```
 
 ### URL whitelist mechanism
@@ -65,7 +68,7 @@ This package also has a path exclusion mechanism I found useful in my projects. 
 
 You can set this url whitelist in  `config/protectionbanner.php`:
 ```php
-    'whitelist_url' => [
+    'whitelist' => [
         'example/url',
         'example2'
     ],

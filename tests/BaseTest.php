@@ -4,7 +4,7 @@ namespace Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 
-abstract class BasetTest extends Orchestra
+abstract class BaseTest extends Orchestra
 {
     protected function setUp(): void
     {
