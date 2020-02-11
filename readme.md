@@ -7,7 +7,15 @@
 [![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-Customizable Laravel Middleware to comply with EU cookie lawls and protect adult websites from child access forcing the client to accept conditions before any cookie or anything is sent, detects crawlers so SEO remains unaffected. Take a look at [contributing.md](contributing.md) to see a to do list.
+Customizable Laravel Middleware to comply with EU Cookie Law (GDPR) and also protect adult websites from child access.
+
+This software goes the hard way to be sure you comply the law:
+ - All HTTP requests are captured and a full page banner is shown to the user. This page doesn't use cookies at all, no session is mantained.
+ - Once the user accepts the condition, a cookie is sent, and user is redirected to the original intended page. All future interactions, proceed as usual. Original GET parameters are passed on to the original request.
+ - It detects crawlers so SEO , opengraph, reddit, twitter... remains unaffected. They are unaffected by this package.
+ - There is a whitelist mechanism so you can exclude certain URL from your website from this behaviour too.
+
+Take a look at [contributing.md](contributing.md) to see a to do list.
 
 ## Installation
 
@@ -36,7 +44,7 @@ Route::get('/','StaticPageController@getRoot')->middleware('protectionbanner');
 
 You can also use the automatic MiddlewareGroup register mechanism in `config/protectionbanner.php`:
 ```php
-	'autoregister' => ['web']
+    'autoregister' => ['web']
 ```
 
 Or you can add the Middleware manually as usual in `app/Http/Kernel.php` in the MiddlewareGroups you require:
@@ -85,12 +93,12 @@ You can set this url whitelist in  `config/protectionbanner.php`:
 
 I don't know if it's of any legal value, but it's possible to log the IP of all accepts of conditions. In `config/protectionbanner.php`:
 ```php
-	/*
-	 * Channel to log accept info, if necessary
-	 * Default: null
-	 * example: "accepts"
-	 */
-	'logchannel' => "accepts"
+    /*
+     * Channel to log accept info, if necessary
+     * Default: null
+     * example: "accepts"
+     */
+    'logchannel' => "accepts"
 ```
 
 You will of course need to add that channel to `config/logging.php`.
