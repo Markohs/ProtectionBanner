@@ -54,6 +54,12 @@ Or you can add the Middleware manually as usual in `app/Http/Kernel.php` in the 
 ..
 ```
 
+### Cawler and SEO
+
+This Middleware *will disable itself if it detects the agent is any crawler or redditbot*, so SEO, Google, and reddit/twitter/opengraph fetches remain unaffected.
+
+This is the cause of the `jaybizzle/laravel-crawler-detect` dependency. I planned to use GEOIP too at some point to be able to disable it on countries where the cookie law might not be important to comply but this is not implemented yet.
+
 ### Set active environments
 
 This package will only be active in the environments you specify, by default `stage`, `prod` and `production`, update `config/protectionbanner.php` if necessary:
@@ -77,7 +83,7 @@ You can set this url whitelist in  `config/protectionbanner.php`:
 
 ### Logging
 
-I don't know if it's of any legal value, but it's possible to log the IP of all accepts of confitions, along ofc, with the timestamp `config/protectionbanner.php`:
+I don't know if it's of any legal value, but it's possible to log the IP of all accepts of conditions. In `config/protectionbanner.php`:
 ```php
 	/*
 	 * Channel to log accept info, if necessary
@@ -91,9 +97,9 @@ You will of course need to add that channel to `config/logging.php`.
 
 ## Important notes
 
-If you are using Cloudflare or some kind of proxy to serve your website, you need to make sure you configure TrustedProxy correctly *or this Middleware will cause redirect loops*.
+If you are using Cloudflare or some kind of proxy to serve your website, you need to make sure you configure TrustedProxy correctly *or this Middleware might not work correctly*.
 
-Make sure you keep `app\Http\Middleware\TrustProxies.php` , variable `$proxies`, up to date. Or the config file `/config/trustedproxy.php`
+Make sure you keep the config file `/config/trustedproxy.php` up to date, or `app\Http\Middleware\TrustProxies.php` , variable `$proxies`. 
 
 ## Change log
 
