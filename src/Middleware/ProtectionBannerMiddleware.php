@@ -4,12 +4,15 @@ namespace Markohs\ProtectionBanner\Middleware;
 
 use Closure;
 use Cookie;
+
 use Crawler;
+
 use Illuminate\Http\Request;
 use Log;
 use Redirect;
 use Response;
 //use GeoIP;
+use App;
 
 use Session;
 
@@ -31,8 +34,8 @@ class ProtectionBannerMiddleware
     {
         $ses_name = config('protectionbanner.ses_name');
 
-        if ($ses_name == null || config('protectionbanner.disabled')) {
-            // probably a config:cache production error, disable this middleware
+        if ($ses_name == null || !App::environment(config('protectionbanner.enabled_environments'))) {
+            // Disabled on this environment, or wrong ses_name, or  config:cache production error. Let's just disable
             return $next($request);
         }
 
@@ -103,11 +106,11 @@ class ProtectionBannerMiddleware
 
     private function isWhitelisted($request)
     {
-        if (config('protectionbanner.whitelist_url') == null) {
+        if (config('protectionbanner.whitelist') == null) {
             return false;
         }
 
-        $regex = '#'.implode('|', config('protectionbanner.whitelist_url')).'#';
+        $regex = '#'.implode('|', config('protectionbanner.whitelist')).'#';
 
         return preg_match($regex, $request->path());
     }

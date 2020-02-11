@@ -6,7 +6,7 @@ return [
      * Default: ['stage', 'prod']
      */
 
-    'envs_enabled' => ['stage', 'prod'],
+    'enabled_environments' => ['stage', 'prod', 'production'],
 
     /*
      * Set up a array of simple text patterns wich will be EXCLUDED from URL redirection, matched in  * regexp fashion
@@ -14,7 +14,7 @@ return [
      * Default: none
      */
 
-    'whitelist_url' => [],
+    'whitelist' => [],
 
     /*
      * Autoregister in these middleware groups
